@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--- . -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Arial", sans-serif;
+        }
+
+        body {
+            background-color: #2a2a2a;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cards {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cards .card {
+            width: 20%;
+            height: 75%;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .cards .card:not(.chat-card) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #ccc;
+        }
+
+        .card>* {
+            font-size: 20px;
+        }
+
+        .cards .card .card-element {
+            background-color: orange;
+            width: 96%;
+            height: 50%;
+            border-radius: 0;
+            transition: all 250ms;
+        }
+
+        .cards .card .radio-buttons {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cards .card .radio-buttons .btn {
+            background-color: #2a2a2a;
+            padding: 5px;
+            color: white;
+            border-radius: 25px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 250ms;
+        }
+
+        .cards .card .radio-buttons .btn:hover {
+            background-color: rgb(42, 42, 42, 0.9);
+        }
+
+        input[type="radio"] {
+            cursor: pointer;
+            position: relative;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        input[type="text"] {
+            border: none;
+            background-color: transparent;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 5px 10px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+        }
+
+        /** Card STYLESHEET*/
+
+        .card.chat-card {
+            background-color: skyblue;
+            width: 25%;
+            height: 75%;
+            transition: all 250ms;
+        }
+
+        .card.chat-card .card-header {
+            width: 100%;
+            height: auto;
+            /** 100px */
+            background-color: white;
+            border-radius: 25px 25px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            padding: 15px 0;
+        }
+
+        .card.chat-card .card-header * {
+            font-size: 20px;
+        }
+
+        .card.chat-card img {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(42, 42, 42, 0.5);
+            border-radius: 50%;
+        }
+
+        .card.chat-card .profile-header {
+            width: 75px;
+            height: 75px;
+            padding: 5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .card.chat-card .card-header button[type="submit"] {
+            border: none;
+            background-color: #00FF00;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 250ms;
+        }
+
+        .card.chat-card .card-header button[type="submit"]:hover {
+            background-color: #03e003;
+        }
+
+        .card.chat-card .message-container {
+            width: 100%;
+            height: calc(100% - 100px);
+            border-bottom-left-radius: inherit;
+            border-bottom-right-radius: inherit;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: stretch;
+            justify-content: flex-end;
+            gap: 5px;
+            overflow: auto;
+        }
+
+        .card.chat-card .message-container .message {
+            background-color: white;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            box-sizing: border-box;
+            gap: 10px;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .card.chat-card {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cards">
+        <div class="card chat-card">
+            <header class="card-header">
+                <div class="profile-header">
+                    <h4 class="profile-name">Semih</h4>
+                    <img src="./assets/profile_header.png" alt="profile_header">
+                </div>
+                <form style="display: flex; flex-direction: column; align-items: stretch; gap: 10px;">
+                    <input required class="message-input" type="text" placeholder="Mesajınızı giriniz">
+                    <button type="submit">Gönder</button>
+                </form>
+            </header>
+            <hr style="margin: 5px;">
+            <div class="message-container"></div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll(".card").forEach(card => {
+            card.querySelectorAll(".radio-buttons .btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const input = btn.querySelector("input[type='radio']");
+                    input.checked = true;
+                    const { value } = input;
+                    if (document.querySelector(".card:last-child").isEqualNode(card)) {
+                        card.querySelector("input[type='text']").value = value;
+                        card.querySelector("label[for='number_square']").innerHTML = `${value} Değerinin küpü: ${value ** 3}`;
+                    }
+                    card.querySelector(".card-element").style["border-radius"] = `${value}px`;
+                })
+            })
+        });
+
+        //CHAT
+        document.querySelectorAll(".card.chat-card").forEach(chatCard => {
+            chatCard.querySelector("form").onsubmit = e => {
+                e.preventDefault();
+                const messageInput = e.target.querySelector("input.message-input");
+                chatCard.querySelector(".message-container").innerHTML += `<div class="message">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;" class="message-content">
+                        <div class="profile-header">
+                           <h4>${chatCard.querySelector(".card-header .profile-header .profile-name").innerHTML}</h4>
+                           <img width="50" height="50" src="./assets/profile_header.png" alt="message_profile_img">
+                        </div>
+                        <p>${messageInput.value}</p>
+                    </div>
+                    <div style="color: #ccc; font-family: sans-serif;">
+                      <h5 unix="${Date.now()}" class="time">${new Date().toLocaleTimeString()}</h5>
+                      <h5 class="time-diff"></h5>
+                    </div>
+                </div>`;
+                messageInput.value = '';
+            }
+        });
+
+        function time(timeDiff) {
+            if (timeDiff < 60) return `${timeDiff} Saniye`;
+            else if (timeDiff >= 60 && timeDiff < 3600) return `${Math.floor(timeDiff / 60)} Dakika`;
+            else if (timeDiff >= 3600 === 0) return `${Math.floor(timeDiff / 3600)} Saat`;
+        }
+
+        setInterval(() => {
+            document.querySelectorAll(".card.chat-card .message-container .message").forEach(message_element => {
+                if (!message_element) return;
+                const time_element = message_element.querySelector(".time");
+                const timeDiff_element = message_element.querySelector(".time-diff");
+                const timeValue = Number.parseInt(time_element.getAttribute("unix"));
+                const timeDiff = Math.floor((Date.now() - timeValue) / 1000);
+                timeDiff_element.innerHTML = `${time(timeDiff)} önce`;
+            })
+        }, 1000);
+    </script>
+</body>
+
+</html>
