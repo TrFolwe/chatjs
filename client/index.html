@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="./public/stylesheets/style.css">
+</head>
+
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h2 style="text-align: center; color: white;">SemihTagram</h2>
+            <div style="
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            background-color: rgb(255, 255, 255, 0.8);
+            padding: 5px;
+            " class="device-count"></div>
+        </header>
+        <ul class="chat"></ul>
+        <form class="chat_toolbar">
+            <h3 class="is-writing" style="display: none; color: white;"></h3>
+			<div>
+            <input maxlength="1000" required type="text" class="text_input" placeholder="Message...">
+            <button type="submit" class="submit_btn">
+                <img src="https://cdn3.iconfinder.com/data/icons/pure-lines-color/100/sqi2016_bg1-go-17-256.png"
+                    alt="submit">
+            </button>
+			</div>
+        </form>
+    </div>
+
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
+    <script src="./public/script.js"></script>
+</body>
+
+</html>
